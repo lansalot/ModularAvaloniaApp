@@ -1,0 +1,113 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="ModularAvaloniaApp.MainWindow"
+        Title="Modular Avalonia App"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E1E">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Top icon bar -->
+            <RowDefinition Height="60"/>
+            <!-- Main content area -->
+            <RowDefinition Height="*"/>
+            <!-- Module management panel -->
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <!-- Main content area -->
+            <ColumnDefinition Width="*"/>
+            <!-- Right side module column -->
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Top Icon Bar -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#2D2D30" Padding="10" BorderBrush="#3E3E42" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" Name="TopIconBar" Spacing="10">
+                <!-- Sample icons will be added here programmatically -->
+            </StackPanel>
+        </Border>
+        
+        <!-- Main Content Area -->
+        <Border Grid.Row="1" Grid.Column="0" Background="#252526" Margin="10" BorderBrush="#3E3E42" BorderThickness="1">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Modular Avalonia Application" 
+                          FontSize="24" 
+                          FontWeight="Bold" 
+                          HorizontalAlignment="Center" 
+                          Margin="0,0,0,20"
+                          Foreground="#E0E0E0"/>
+                
+                <TextBlock Name="TimeLabel" 
+                          Text="Loading time..." 
+                          FontSize="18" 
+                          HorizontalAlignment="Center"
+                          Foreground="#4EC9B0"/>
+                
+                <TextBlock Text="Modules will add their icons to the top bar and controls to the right panel." 
+                          FontSize="12" 
+                          HorizontalAlignment="Center" 
+                          Margin="0,20,0,0"
+                          TextWrapping="Wrap"
+                          Foreground="#9CDCFE"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Right Side Module Panel -->
+        <Border Grid.Row="1" Grid.Column="1" Background="#1E1E1E" Margin="10" BorderBrush="#3E3E42" BorderThickness="1">
+            <ScrollViewer>
+                <StackPanel Name="RightModulePanel" Spacing="5" Margin="10">
+                    <TextBlock Text="Module Controls" 
+                              FontWeight="Bold" 
+                              HorizontalAlignment="Center" 
+                              Margin="0,0,0,10"
+                              Foreground="#E0E0E0"/>
+                    <!-- Module controls will be added here programmatically -->
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+        
+        <!-- Module Management Panel -->
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#2D2D30" Margin="10,0,10,10" Padding="10" BorderBrush="#3E3E42" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Module List -->
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Module Management" FontWeight="Bold" FontSize="14" Margin="0,0,0,10" Foreground="#E0E0E0"/>
+                    <ScrollViewer Height="90">
+                        <StackPanel Name="ModuleListPanel" Spacing="5">
+                            <!-- Module list items will be added here -->
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
+                
+                <!-- Control Buttons -->
+                <StackPanel Grid.Column="1" Spacing="10" Margin="10,0,0,0" VerticalAlignment="Center">
+                    <Button Name="RefreshModulesButton" 
+                            Content="🔄 Refresh Modules" 
+                            HorizontalAlignment="Stretch"
+                            Background="#0E639C"
+                            Foreground="White"
+                            FontWeight="SemiBold"
+                            Padding="10,8"/>
+                    <Button Name="UnloadAllButton" 
+                            Content="❌ Unload All" 
+                            HorizontalAlignment="Stretch"
+                            Background="#C72E0D"
+                            Foreground="White"
+                            FontWeight="SemiBold"
+                            Padding="10,8"/>
+                    <TextBlock Name="ModuleCountLabel" Text="Modules: 0" HorizontalAlignment="Center" FontSize="12" Foreground="#9CDCFE" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
