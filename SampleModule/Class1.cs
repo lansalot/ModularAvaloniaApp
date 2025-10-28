@@ -10,6 +10,7 @@ namespace SampleModule
     {
         private IMessageBus? _messageBus;
         private TextBlock? _timeDisplay;
+        private TextBox? _messageTextBox;
         private int _clickCount = 0;
 
         public string ModuleId => "demo-module-1";
@@ -22,6 +23,9 @@ namespace SampleModule
             
             // Subscribe to time updates
             _messageBus.Subscribe<TimeUpdateMessage>(MessageTopics.CurrentTime, OnTimeUpdate);
+            
+            // Publish initial empty text so other modules know we're ready
+            _messageBus.Publish("demo.text.changed", new TextDataMessage { Text = "", Timestamp = DateTime.Now });
             
             Console.WriteLine($"Demo Module initialized and subscribed to time updates");
         }
@@ -68,6 +72,65 @@ namespace SampleModule
             };
             controls.Add(_timeDisplay);
 
+            // Text input box for inter-module communication
+            _messageTextBox = new TextBox
+            {
+                Watermark = "Enter message here...",
+                Width = 150,
+                Margin = new Avalonia.Thickness(0, 0, 0, 5),
+                Background = new SolidColorBrush(Color.FromRgb(37, 37, 38)),
+                Foreground = new SolidColorBrush(Color.FromRgb(224, 224, 224)),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(99, 99, 102))
+            };
+            _messageTextBox.TextChanged += (s, e) =>
+            {
+                // Publish text changes so other modules can read it
+                var text = _messageTextBox.Text ?? "";
+                ModularAvaloniaApp.Services.DebugLogger.Log($"Demo Module publishing text: '{text}'");
+                _messageBus?.Publish("demo.text.changed", new TextDataMessage { Text = text, Timestamp = DateTime.Now });
+            };
+            controls.Add(_messageTextBox);
+            
+            // Publish initial value after a short delay to ensure other modules are loaded
+            System.Threading.Tasks.Task.Delay(500).ContinueWith(_ =>
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                {
+                    var initialText = _messageTextBox?.Text ?? "";
+                    Console.WriteLine($"Demo Module publishing initial text: '{initialText}'");
+                    _messageBus?.Publish("demo.text.changed", new TextDataMessage { Text = initialText, Timestamp = DateTime.Now });
+                });
+            });
+
+            controls.Add(new TextBlock
+            {
+                Text = "Other modules can read this text",
+                FontSize = 9,
+                Foreground = new SolidColorBrush(Color.FromRgb(156, 156, 156)),
+                Margin = new Avalonia.Thickness(0, 0, 0, 5),
+                TextWrapping = TextWrapping.Wrap
+            });
+
+            // Button to manually send the text
+            var sendButton = new Button
+            {
+                Content = "📤 Send to Reader",
+                Width = 150,
+                Height = 30,
+                Background = new SolidColorBrush(Color.FromRgb(14, 99, 156)),
+                Foreground = new SolidColorBrush(Color.FromRgb(224, 224, 224)),
+                Margin = new Avalonia.Thickness(0, 0, 0, 10),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(99, 99, 102)),
+                BorderThickness = new Avalonia.Thickness(1)
+            };
+            sendButton.Click += (s, e) =>
+            {
+                var text = _messageTextBox?.Text ?? "";
+                ModularAvaloniaApp.Services.DebugLogger.Log($"Demo Module SEND button clicked, text: '{text}'");
+                _messageBus?.Publish("demo.text.changed", new TextDataMessage { Text = text, Timestamp = DateTime.Now });
+            };
+            controls.Add(sendButton);
+
             // Sample icon buttons
             for (int i = 1; i <= 3; i++)
             {
@@ -106,6 +169,12 @@ namespace SampleModule
             controls.Add(clickCountDisplay);
 
             return controls;
+        }
+
+        public IEnumerable<Control>? GetLeftColumnControls()
+        {
+            // This module doesn't use the left column
+            return null;
         }
 
         public void OnTopBarIconClicked()

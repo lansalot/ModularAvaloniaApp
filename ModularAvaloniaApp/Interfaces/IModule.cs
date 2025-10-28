@@ -42,6 +42,12 @@ namespace ModularAvaloniaApp.Interfaces
         IEnumerable<Control> GetRightColumnControls();
         
         /// <summary>
+        /// Get the list of controls to display in the left column
+        /// </summary>
+        /// <returns>List of controls for the left side panel, or null if not used</returns>
+        IEnumerable<Control>? GetLeftColumnControls();
+        
+        /// <summary>
         /// Called when the module's top bar icon is clicked
         /// </summary>
         void OnTopBarIconClicked();

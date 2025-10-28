@@ -19,6 +19,8 @@
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
+            <!-- Left side module column -->
+            <ColumnDefinition Width="200"/>
             <!-- Main content area -->
             <ColumnDefinition Width="*"/>
             <!-- Right side module column -->
@@ -26,14 +28,28 @@
         </Grid.ColumnDefinitions>
         
         <!-- Top Icon Bar -->
-        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#2D2D30" Padding="10" BorderBrush="#3E3E42" BorderThickness="0,0,0,1">
+        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#2D2D30" Padding="10" BorderBrush="#3E3E42" BorderThickness="0,0,0,1">
             <StackPanel Orientation="Horizontal" Name="TopIconBar" Spacing="10">
                 <!-- Sample icons will be added here programmatically -->
             </StackPanel>
         </Border>
         
+        <!-- Left Side Module Panel -->
+        <Border Grid.Row="1" Grid.Column="0" Background="#1E1E1E" Margin="10" BorderBrush="#3E3E42" BorderThickness="1">
+            <ScrollViewer>
+                <StackPanel Name="LeftModulePanel" Spacing="5" Margin="10">
+                    <TextBlock Text="Left Panel" 
+                              FontWeight="Bold" 
+                              HorizontalAlignment="Center" 
+                              Margin="0,0,0,10"
+                              Foreground="#E0E0E0"/>
+                    <!-- Module controls will be added here programmatically -->
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+        
         <!-- Main Content Area -->
-        <Border Grid.Row="1" Grid.Column="0" Background="#252526" Margin="10" BorderBrush="#3E3E42" BorderThickness="1">
+        <Border Grid.Row="1" Grid.Column="1" Background="#252526" Margin="10" BorderBrush="#3E3E42" BorderThickness="1">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="Modular Avalonia Application" 
                           FontSize="24" 
@@ -58,7 +74,7 @@
         </Border>
         
         <!-- Right Side Module Panel -->
-        <Border Grid.Row="1" Grid.Column="1" Background="#1E1E1E" Margin="10" BorderBrush="#3E3E42" BorderThickness="1">
+        <Border Grid.Row="1" Grid.Column="2" Background="#1E1E1E" Margin="10" BorderBrush="#3E3E42" BorderThickness="1">
             <ScrollViewer>
                 <StackPanel Name="RightModulePanel" Spacing="5" Margin="10">
                     <TextBlock Text="Module Controls" 
@@ -72,7 +88,7 @@
         </Border>
         
         <!-- Module Management Panel -->
-        <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#2D2D30" Margin="10,0,10,10" Padding="10" BorderBrush="#3E3E42" BorderThickness="1">
+        <Border Grid.Row="2" Grid.ColumnSpan="3" Background="#2D2D30" Margin="10,0,10,10" Padding="10" BorderBrush="#3E3E42" BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -91,6 +107,13 @@
                 
                 <!-- Control Buttons -->
                 <StackPanel Grid.Column="1" Spacing="10" Margin="10,0,0,0" VerticalAlignment="Center">
+                    <Button Name="ShowDebugButton" 
+                            Content="🐛 Debug Console" 
+                            HorizontalAlignment="Stretch"
+                            Background="#6A1B9A"
+                            Foreground="White"
+                            FontWeight="SemiBold"
+                            Padding="10,8"/>
                     <Button Name="RefreshModulesButton" 
                             Content="🔄 Refresh Modules" 
                             HorizontalAlignment="Stretch"

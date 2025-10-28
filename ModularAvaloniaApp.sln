@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularAvaloniaApp", "Modul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleModule", "SampleModule\SampleModule.csproj", "{C3647358-33B7-4E96-8C20-2AA6DDC6DAE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondModule", "SecondModule\SecondModule.csproj", "{F653ED9D-76E8-4E65-8075-779B35282F72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{C3647358-33B7-4E96-8C20-2AA6DDC6DAE2}.Release|x64.Build.0 = Release|Any CPU
 		{C3647358-33B7-4E96-8C20-2AA6DDC6DAE2}.Release|x86.ActiveCfg = Release|Any CPU
 		{C3647358-33B7-4E96-8C20-2AA6DDC6DAE2}.Release|x86.Build.0 = Release|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Debug|x64.Build.0 = Debug|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Debug|x86.Build.0 = Debug|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Release|x64.ActiveCfg = Release|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Release|x64.Build.0 = Release|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Release|x86.ActiveCfg = Release|Any CPU
+		{F653ED9D-76E8-4E65-8075-779B35282F72}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

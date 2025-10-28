@@ -25,6 +25,7 @@
     <MakeDir Directories="$(OutputPath)modules" />
     <ItemGroup>
       <ModuleFiles Include="$(MSBuildProjectDirectory)\..\SampleModule\bin\$(Configuration)\$(TargetFramework)\SampleModule.dll" />
+      <ModuleFiles Include="$(MSBuildProjectDirectory)\..\SecondModule\bin\$(Configuration)\$(TargetFramework)\SecondModule.dll" Condition="Exists('$(MSBuildProjectDirectory)\..\SecondModule\bin\$(Configuration)\$(TargetFramework)\SecondModule.dll')" />
     </ItemGroup>
     <Copy SourceFiles="@(ModuleFiles)" DestinationFolder="$(OutputPath)modules" SkipUnchangedFiles="true" />
   </Target>

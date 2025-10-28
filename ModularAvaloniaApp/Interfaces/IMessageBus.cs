@@ -61,4 +61,13 @@ namespace ModularAvaloniaApp.Interfaces
         public string ModuleId { get; set; } = string.Empty;
         public string ModuleName { get; set; } = string.Empty;
     }
+    
+    /// <summary>
+    /// Text data message for inter-module communication
+    /// </summary>
+    public class TextDataMessage
+    {
+        public string Text { get; set; } = string.Empty;
+        public DateTime Timestamp { get; set; }
+    }
 }

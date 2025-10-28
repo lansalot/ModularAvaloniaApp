@@ -16,6 +16,7 @@ public partial class MainWindow : Window
     private readonly ModuleLoader _moduleLoader;
     private readonly Timer _timeUpdateTimer;
     private StackPanel? _topIconBar;
+    private StackPanel? _leftModulePanel;
     private StackPanel? _rightModulePanel;
     private TextBlock? _timeLabel;
     private StackPanel? _moduleListPanel;
@@ -25,6 +26,7 @@ public partial class MainWindow : Window
     
     // Track which controls belong to which modules
     private readonly Dictionary<string, List<Control>> _moduleTopBarControls = new();
+    private readonly Dictionary<string, List<Control>> _moduleLeftPanelControls = new();
     private readonly Dictionary<string, List<Control>> _moduleRightPanelControls = new();
 
     public MainWindow()
@@ -37,6 +39,7 @@ public partial class MainWindow : Window
         
         // Get references to UI elements
         _topIconBar = this.FindControl<StackPanel>("TopIconBar");
+        _leftModulePanel = this.FindControl<StackPanel>("LeftModulePanel");
         _rightModulePanel = this.FindControl<StackPanel>("RightModulePanel");
         _timeLabel = this.FindControl<TextBlock>("TimeLabel");
         _moduleListPanel = this.FindControl<StackPanel>("ModuleListPanel");
@@ -44,7 +47,12 @@ public partial class MainWindow : Window
         _refreshModulesButton = this.FindControl<Button>("RefreshModulesButton");
         _unloadAllButton = this.FindControl<Button>("UnloadAllButton");
         
+        var showDebugButton = this.FindControl<Button>("ShowDebugButton");
+        
         // Wire up button events
+        if (showDebugButton != null)
+            showDebugButton.Click += (s, e) => Services.DebugLogger.ShowDebugWindow();
+        
         if (_refreshModulesButton != null)
             _refreshModulesButton.Click += (s, e) => RefreshModules();
         
@@ -128,6 +136,7 @@ public partial class MainWindow : Window
 
             // Initialize tracking lists for this module
             _moduleTopBarControls[message.ModuleId] = new List<Control>();
+            _moduleLeftPanelControls[message.ModuleId] = new List<Control>();
             _moduleRightPanelControls[message.ModuleId] = new List<Control>();
 
             // Add module's top bar icon
@@ -159,6 +168,24 @@ public partial class MainWindow : Window
             catch (Exception ex)
             {
                 Console.WriteLine($"Error adding top icon for module {message.ModuleId}: {ex.Message}");
+            }
+
+            // Add module's left panel controls
+            try
+            {
+                var leftControls = module.GetLeftColumnControls();
+                if (leftControls != null && _leftModulePanel != null)
+                {
+                    foreach (var control in leftControls)
+                    {
+                        _leftModulePanel.Children.Add(control);
+                        _moduleLeftPanelControls[message.ModuleId].Add(control);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding left panel controls for module {message.ModuleId}: {ex.Message}");
             }
 
             // Add module's right panel controls
@@ -196,6 +223,16 @@ public partial class MainWindow : Window
                     _topIconBar?.Children.Remove(control);
                 }
                 _moduleTopBarControls.Remove(message.ModuleId);
+            }
+
+            // Remove left panel controls
+            if (_moduleLeftPanelControls.TryGetValue(message.ModuleId, out var leftControls))
+            {
+                foreach (var control in leftControls)
+                {
+                    _leftModulePanel?.Children.Remove(control);
+                }
+                _moduleLeftPanelControls.Remove(message.ModuleId);
             }
 
             // Remove right panel controls
